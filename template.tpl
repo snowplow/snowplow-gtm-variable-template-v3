@@ -54,7 +54,7 @@ ___TEMPLATE_PARAMETERS___
         "valueValidators": [
           {
             "args": [
-              "^(https?://)?[a-z0-9.:]+$"
+              "^\\S+$"
             ],
             "errorMessage": "You must provide a valid hostname.",
             "type": "REGEX"
