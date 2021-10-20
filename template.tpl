@@ -64,7 +64,7 @@ ___TEMPLATE_PARAMETERS___
         "simpleValueType": true,
         "name": "collectorEndpoint",
         "type": "TEXT",
-        "valueHint": "e.g. snowplowcollector.cloudfront.net"
+        "valueHint": "e.g. snowplowcollector.mydomain.net"
       },
       {
         "displayName": "JavaScript Tracker",
