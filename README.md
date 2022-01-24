@@ -40,10 +40,11 @@ After pushing the changes, Google Tag Manager should update the template in the 
 
 ## Find out more
 
-| Tag Template |
-|---------------------------------|
-| ![i1][techdocs-image]           |
-| **[Technical Docs](https://docs.snowplowanalytics.com)** |
+| Tag Template                      |
+|-----------------------------------|
+| [![i1][techdocs-image]][techdocs] |
+| **[Technical Docs][techdocs]**    |
+|                                   |
 
 ## Copyright and license
 
@@ -59,3 +60,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 [techdocs-image]: https://d3i6fms1cm1j0i.cloudfront.net/github/images/techdocs.png
+[techdocs]: https://docs.snowplowanalytics.com/docs/collecting-data/collecting-from-own-applications/javascript-trackers/javascript-tracker/google-tag-manager-custom-template/template-for-javascript-tracker-v3/settings-variable-guide/
