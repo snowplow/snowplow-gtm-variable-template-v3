@@ -2,11 +2,13 @@ homepage: "https://snowplowanalytics.com/"
 documentation: "https://docs.snowplowanalytics.com/docs/collecting-data/collecting-from-own-applications/javascript-trackers/javascript-tracker/google-tag-manager-custom-template/template-for-javascript-tracker-v3/settings-variable-guide/"
 versions:
   # Latest version
+  - sha: 7ecf32d171cf66fce956d1eff8fb0fded38d340d
+    changeNotes: Fix metadata.yaml syntax (#7) 
+  # Older versions
   - sha: 72fc820682a4f413e34a13650c8d7b89c7ee7383
-    changeNotes: |3
+    changeNotes: |2
       Update documentation links (#6)
       Update Copyright to 2022 (#4)
       Allow anonymousTracking to be set from a variable (#3)
-  # Older versions
   - sha: 5ad75347be604100b36815d21addcb62f2d519cf
     changeNotes: Initial release
