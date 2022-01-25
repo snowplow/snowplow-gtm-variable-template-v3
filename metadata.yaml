@@ -3,7 +3,7 @@ documentation: "https://docs.snowplowanalytics.com/docs/collecting-data/collecti
 versions:
   # Latest version
   - sha: 72fc820682a4f413e34a13650c8d7b89c7ee7383
-    changeNotes: |3
+    changeNotes: |2
       Update documentation links (#6)
       Update Copyright to 2022 (#4)
       Allow anonymousTracking to be set from a variable (#3)
