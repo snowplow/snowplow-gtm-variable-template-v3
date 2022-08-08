@@ -384,7 +384,8 @@ ___TEMPLATE_PARAMETERS___
         "defaultValue": "sp",
         "simpleValueType": true,
         "name": "cookieName",
-        "type": "TEXT"
+        "type": "TEXT",
+        "help": "Use this field to set the first-party cookie name prefix of the tracker instance. The default value is different to the JavaScript tracker\u0027s default. If you want it to be the same, set this to \u003cstrong\u003e_sp_\u003c/strong\u003e"
       },
       {
         "selectItems": [
@@ -800,8 +801,8 @@ scenarios:
     \ 'custom',\n  customPlatform: 'testPlatform',\n  \n  respectDoNotTrack: false,\n\
     \  anonymousTracking: 'anonymousTrackingTrue',\n  withServerAnonymisation: true,\n\
     \  withSessionTracking: false,\n  \n  stateStorageStrategy: 'cookieAndLocalStorage',\n\
-    \  cookieDomain: 'auto',\n  cookieName: 'sp',\n  cookieLifetime: 'custom',\n \
-    \ customCookieLifetime: '123',\n  cookieSameSite: 'Lax',\n  cookieSecure: true,\n\
+    \  cookieDomain: 'auto',\n  cookieName: 'sp',\n  cookieLifetime: 'custom',\n\
+    \  customCookieLifetime: '123',\n  cookieSameSite: 'Lax',\n  cookieSecure: true,\n\
     \  sessionCookieTimeout: '1800',\n  maxLocalStorageQueueSize: '123',\n  \n  eventMethod:\
     \ 'post',\n  encodeBase64: false,\n  bufferSize: '123',\n  postPath: 'postPath',\n\
     \  maxPostBytes: '123',\n  resetActivityTrackingOnPageView: true,\n  connectionTimeout:\
@@ -887,5 +888,3 @@ setup: ''
 ___NOTES___
 
 Created on 16/08/2019, 09:46:59
-
-
