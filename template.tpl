@@ -736,24 +736,33 @@ ___TEMPLATE_PARAMETERS___
 
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
-const UNPKG = 'https://unpkg.com/browse/@snowplow/javascript-tracker@' + data.version + '/dist/sp.js';
-const JSDELIVR = 'https://cdn.jsdelivr.net/npm/@snowplow/javascript-tracker@' + data.version + '/dist/sp.min.js';
+const UNPKG =
+  'https://unpkg.com/browse/@snowplow/javascript-tracker@' +
+  data.version +
+  '/dist/sp.js';
+const JSDELIVR =
+  'https://cdn.jsdelivr.net/npm/@snowplow/javascript-tracker@' +
+  data.version +
+  '/dist/sp.min.js';
 
 const libUrl = data.spLibrary === 'unpkg' ? UNPKG
              : (data.spLibrary === 'jsDelivr' ? JSDELIVR
              : data.selfHostedUrl);
 
-const anonymousTracking = () => {
-  if (data.anonymousTracking === 'anonymousTrackingFalse' || !data.anonymousTracking) {
+const anonymousTracking = (() => {
+  if (
+    data.anonymousTracking === 'anonymousTrackingFalse' ||
+    !data.anonymousTracking
+  ) {
     return false;
   } else if (data.anonymousTracking === 'anonymousTrackingTrue') {
     return {
       withServerAnonymisation: data.withServerAnonymisation || false,
-      withSessionTracking: data.withSessionTracking || false
+      withSessionTracking: data.withSessionTracking || false,
     };
   }
   return data.anonymousTracking;
-}();
+})();
 
 return {
   type: 'snowplow',
@@ -764,8 +773,10 @@ return {
   cookieDomain: data.cookieDomain !== 'auto' && data.cookieDomain,
   discoverRootDomain: data.cookieDomain === 'auto',
   cookieName: data.cookieName,
-  cookieLifetime: data.cookieLifetime !== 'custom' ? data.cookieLifetime : data.customCookieLifetime,
-  cookieSameSite: data.cookieSameSite === 'noSameSite' ? null : data.cookieSameSite,
+  cookieLifetime:
+    data.cookieLifetime !== 'custom' ? data.cookieLifetime : data.customCookieLifetime,
+  cookieSameSite:
+    data.cookieSameSite === 'noSameSite' ? null : data.cookieSameSite,
   cookieSecure: data.cookieSecure,
   sessionCookieTimeout: data.sessionCookieTimeout,
   maxLocalStorageQueueSize: data.maxLocalStorageQueueSize,
@@ -786,8 +797,8 @@ return {
   trackerOptions: {
     trackerName: data.trackerName,
     collectorEndpoint: data.collectorEndpoint,
-    libUrl: libUrl
-  }
+    libUrl: libUrl,
+  },
 };
 
 
@@ -795,92 +806,259 @@ ___TESTS___
 
 scenarios:
 - name: Variable returns expected object
-  code: "const mockData = {\n  trackerName: 'snowTracker',\n  collectorEndpoint: 'https://www.test.com',\n\
-    \  \n  spLibrary: 'unpkg',\n  version: '3.1.5',\n  \n  appId: 'app-id',\n  platform:\
-    \ 'custom',\n  customPlatform: 'testPlatform',\n  \n  respectDoNotTrack: false,\n\
-    \  anonymousTracking: 'anonymousTrackingTrue',\n  withServerAnonymisation: true,\n\
-    \  withSessionTracking: false,\n  \n  stateStorageStrategy: 'cookieAndLocalStorage',\n\
-    \  cookieDomain: 'auto',\n  cookieName: '_sp_',\n  cookieLifetime: 'custom',\n\
-    \  customCookieLifetime: '123',\n  cookieSameSite: 'Lax',\n  cookieSecure: true,\n\
-    \  sessionCookieTimeout: '1800',\n  maxLocalStorageQueueSize: '123',\n  \n  eventMethod:\
-    \ 'post',\n  encodeBase64: false,\n  bufferSize: '123',\n  postPath: 'postPath',\n\
-    \  maxPostBytes: '123',\n  resetActivityTrackingOnPageView: true,\n  connectionTimeout:\
-    \ '500',\n  \n  webPage: true,\n  performanceTiming: false,\n  gaCookies: false,\n\
-    \  clientHints: false,\n  geolocation: false,\n};\n\nconst expected = {\n  type:\
-    \ 'snowplow',\n  appId: mockData.appId,\n  platform: mockData.customPlatform,\n\
-    \  respectDoNotTrack: mockData.respectDoNotTrack,\n  stateStorageStrategy: mockData.stateStorageStrategy,\n\
-    \  cookieDomain: false,\n  discoverRootDomain: true,\n  cookieName: mockData.cookieName,\n\
-    \  cookieLifetime: mockData.customCookieLifetime,\n  cookieSameSite: 'Lax',\n\
-    \  cookieSecure: mockData.cookieSecure,\n  sessionCookieTimeout: mockData.sessionCookieTimeout,\n\
-    \  maxLocalStorageQueueSize: mockData.maxLocalStorageQueueSize,\n  eventMethod:\
-    \ mockData.eventMethod,\n  encodeBase64: mockData.encodeBase64,\n  bufferSize:\
-    \ mockData.bufferSize,\n  postPath: mockData.postPath,\n  maxPostBytes: mockData.maxPostBytes,\n\
-    \  connectionTimeout: mockData.connectionTimeout,\n  anonymousTracking: {\n  \
-    \  withServerAnonymisation: mockData.withServerAnonymisation,\n    withSessionTracking:\
-    \ mockData.withSessionTracking\n  },\n  contexts: {\n    webPage: mockData.webPage,\n\
-    \    performanceTiming: mockData.performanceTiming,\n    gaCookies: mockData.gaCookies,\n\
-    \    geolocation: mockData.geolocation,\n    clientHints: mockData.clientHints,\n\
-    \  },\n  trackerOptions: {\n    trackerName: mockData.trackerName,\n    collectorEndpoint:\
-    \ mockData.collectorEndpoint,\n    libUrl: 'https://unpkg.com/browse/@snowplow/javascript-tracker@'\
-    \ + mockData.version + '/dist/sp.js'\n  }\n};\n  \n// Call runCode to run the\
-    \ template's code.\nconst variableResult = runCode(mockData);\n\n// Verify that\
-    \ the variable returns a result.\nassertThat(variableResult).isEqualTo(expected);"
+  code: |
+    const mockData = {
+      trackerName: 'snowTracker',
+      collectorEndpoint: 'https://www.test.com',
+
+      spLibrary: 'unpkg',
+      version: '3.1.5',
+
+      appId: 'app-id',
+      platform: 'custom',
+      customPlatform: 'testPlatform',
+
+      respectDoNotTrack: false,
+      anonymousTracking: 'anonymousTrackingTrue',
+      withServerAnonymisation: true,
+      withSessionTracking: false,
+
+      stateStorageStrategy: 'cookieAndLocalStorage',
+      cookieDomain: 'auto',
+      cookieName: '_sp_',
+      cookieLifetime: 'custom',
+      customCookieLifetime: '123',
+      cookieSameSite: 'Lax',
+      cookieSecure: true,
+      sessionCookieTimeout: '1800',
+      maxLocalStorageQueueSize: '123',
+
+      eventMethod: 'post',
+      encodeBase64: false,
+      bufferSize: '123',
+      postPath: 'postPath',
+      maxPostBytes: '123',
+      resetActivityTrackingOnPageView: true,
+      connectionTimeout: '500',
+
+      webPage: true,
+      performanceTiming: false,
+      gaCookies: false,
+      clientHints: false,
+      geolocation: false,
+    };
+
+    const expected = {
+      type: 'snowplow',
+      appId: mockData.appId,
+      platform: mockData.customPlatform,
+      respectDoNotTrack: mockData.respectDoNotTrack,
+      stateStorageStrategy: mockData.stateStorageStrategy,
+      cookieDomain: false,
+      discoverRootDomain: true,
+      cookieName: mockData.cookieName,
+      cookieLifetime: mockData.customCookieLifetime,
+      cookieSameSite: 'Lax',
+      cookieSecure: mockData.cookieSecure,
+      sessionCookieTimeout: mockData.sessionCookieTimeout,
+      maxLocalStorageQueueSize: mockData.maxLocalStorageQueueSize,
+      eventMethod: mockData.eventMethod,
+      encodeBase64: mockData.encodeBase64,
+      bufferSize: mockData.bufferSize,
+      postPath: mockData.postPath,
+      maxPostBytes: mockData.maxPostBytes,
+      connectionTimeout: mockData.connectionTimeout,
+      anonymousTracking: {
+        withServerAnonymisation: mockData.withServerAnonymisation,
+        withSessionTracking: mockData.withSessionTracking,
+      },
+      contexts: {
+        webPage: mockData.webPage,
+        performanceTiming: mockData.performanceTiming,
+        gaCookies: mockData.gaCookies,
+        geolocation: mockData.geolocation,
+        clientHints: mockData.clientHints,
+      },
+      trackerOptions: {
+        trackerName: mockData.trackerName,
+        collectorEndpoint: mockData.collectorEndpoint,
+        libUrl:
+          'https://unpkg.com/browse/@snowplow/javascript-tracker@' +
+          mockData.version +
+          '/dist/sp.js',
+      },
+    };
+
+    // Call runCode to run the template's code.
+    const variableResult = runCode(mockData);
+
+    // Verify that the variable returns a result.
+    assertThat(variableResult).isEqualTo(expected);
 - name: Test anonymous tracking false
-  code: "const mockData = {\n  trackerName:\"spTracker\",\n  collectorEndpoint:\"\
-    test\",\n  \n  spLibrary: 'unpkg',\n  version: '3.1.5',\n  \n  appId:\"my-site\"\
-    ,\n  platform:\"web\",\n  \n  respectDoNotTrack:true,\n  anonymousTracking:\"\
-    anonymousTrackingFalse\",\n  \n  stateStorageStrategy:\"cookieAndLocalStorage\"\
-    ,\n  cookieDomain:\"auto\",\n  cookieName:\"_sp_\",\n  cookieLifetime:63072000,\n\
-    \  cookieSameSite:\"Lax\",\n  sessionCookieTimeout:\"1800\",\n  cookieSecure:true,\n\
-    \  maxLocalStorageQueueSize:\"1000\",\n  \n  eventMethod:\"post\",\n  postPath:\"\
-    /com.snowplowanalytics.snowplow/tp2\",\n  bufferSize:\"1\",\n  encodeBase64:true,\n\
-    \  maxPostBytes:\"40000\",\n  connectionTimeout:\"5000\",\n  \n  webPage:true,\n\
-    \  gaCookies:false,\n  clientHints:false,\n  performanceTiming:false,\n  geolocation:false,\n\
-    };\n\nconst expected = {\n  type: 'snowplow',\n  appId: mockData.appId,\n  platform:\
-    \ mockData.platform,\n  respectDoNotTrack: mockData.respectDoNotTrack,\n  stateStorageStrategy:\
-    \ mockData.stateStorageStrategy,\n  cookieDomain: false,\n  discoverRootDomain:\
-    \ true,\n  cookieName: mockData.cookieName,\n  cookieLifetime: mockData.cookieLifetime,\n\
-    \  cookieSameSite: 'Lax',\n  cookieSecure: mockData.cookieSecure,\n  sessionCookieTimeout:\
-    \ mockData.sessionCookieTimeout,\n  maxLocalStorageQueueSize: mockData.maxLocalStorageQueueSize,\n\
-    \  eventMethod: mockData.eventMethod,\n  encodeBase64: mockData.encodeBase64,\n\
-    \  bufferSize: mockData.bufferSize,\n  postPath: mockData.postPath,\n  maxPostBytes:\
-    \ mockData.maxPostBytes,\n  connectionTimeout: mockData.connectionTimeout,\n \
-    \ anonymousTracking: false,\n  contexts: {\n    webPage: mockData.webPage,\n \
-    \   performanceTiming: mockData.performanceTiming,\n    gaCookies: mockData.gaCookies,\n\
-    \    geolocation: mockData.geolocation,\n    clientHints: mockData.clientHints,\n\
-    \  },\n  trackerOptions: {\n    trackerName: mockData.trackerName,\n    collectorEndpoint:\
-    \ mockData.collectorEndpoint,\n    libUrl: 'https://unpkg.com/browse/@snowplow/javascript-tracker@'\
-    \ + mockData.version + '/dist/sp.js'\n  }\n};\n\n// Call runCode to run the template's\
-    \ code.\nlet variableResult = runCode(mockData);\n\n// Verify that the variable\
-    \ returns a result.\nassertThat(variableResult).isEqualTo(expected);"
+  code: |
+    const mockData = {
+      trackerName: 'spTracker',
+      collectorEndpoint: 'test',
+
+      spLibrary: 'unpkg',
+      version: '3.1.5',
+
+      appId: 'my-site',
+      platform: 'web',
+
+      respectDoNotTrack: true,
+      anonymousTracking: 'anonymousTrackingFalse',
+
+      stateStorageStrategy: 'cookieAndLocalStorage',
+      cookieDomain: 'auto',
+      cookieName: '_sp_',
+      cookieLifetime: 63072000,
+      cookieSameSite: 'Lax',
+      sessionCookieTimeout: '1800',
+      cookieSecure: true,
+      maxLocalStorageQueueSize: '1000',
+
+      eventMethod: 'post',
+      postPath: '/com.snowplowanalytics.snowplow/tp2',
+      bufferSize: '1',
+      encodeBase64: true,
+      maxPostBytes: '40000',
+      connectionTimeout: '5000',
+
+      webPage: true,
+      gaCookies: false,
+      clientHints: false,
+      performanceTiming: false,
+      geolocation: false,
+    };
+
+    const expected = {
+      type: 'snowplow',
+      appId: mockData.appId,
+      platform: mockData.platform,
+      respectDoNotTrack: mockData.respectDoNotTrack,
+      stateStorageStrategy: mockData.stateStorageStrategy,
+      cookieDomain: false,
+      discoverRootDomain: true,
+      cookieName: mockData.cookieName,
+      cookieLifetime: mockData.cookieLifetime,
+      cookieSameSite: 'Lax',
+      cookieSecure: mockData.cookieSecure,
+      sessionCookieTimeout: mockData.sessionCookieTimeout,
+      maxLocalStorageQueueSize: mockData.maxLocalStorageQueueSize,
+      eventMethod: mockData.eventMethod,
+      encodeBase64: mockData.encodeBase64,
+      bufferSize: mockData.bufferSize,
+      postPath: mockData.postPath,
+      maxPostBytes: mockData.maxPostBytes,
+      connectionTimeout: mockData.connectionTimeout,
+      anonymousTracking: false,
+      contexts: {
+        webPage: mockData.webPage,
+        performanceTiming: mockData.performanceTiming,
+        gaCookies: mockData.gaCookies,
+        geolocation: mockData.geolocation,
+        clientHints: mockData.clientHints,
+      },
+      trackerOptions: {
+        trackerName: mockData.trackerName,
+        collectorEndpoint: mockData.collectorEndpoint,
+        libUrl:
+          'https://unpkg.com/browse/@snowplow/javascript-tracker@' +
+          mockData.version +
+          '/dist/sp.js',
+      },
+    };
+
+    // Call runCode to run the template's code.
+    let variableResult = runCode(mockData);
+
+    // Verify that the variable returns a result.
+    assertThat(variableResult).isEqualTo(expected);
 - name: Test anonymous tracking from variable
-  code: "const myConsentVar = {\n  withServerAnonymisation: true,\n  withSessionTracking:\
-    \ true\n};\n\nconst mockData = {\n  trackerName:\"spTracker\",\n  collectorEndpoint:\"\
-    test\",\n  \n  spLibrary: 'unpkg',\n  version: '3.1.5',\n  \n  appId:\"my-site\"\
-    ,\n  platform:\"web\",\n  \n  respectDoNotTrack:true,\n  anonymousTracking:myConsentVar,\n\
-    \  \n  stateStorageStrategy:\"cookieAndLocalStorage\",\n  cookieDomain:\"auto\"\
-    ,\n  cookieName:\"_sp_\",\n  cookieLifetime:63072000,\n  cookieSameSite:\"Lax\"\
-    ,\n  sessionCookieTimeout:\"1800\",\n  cookieSecure:true,\n  maxLocalStorageQueueSize:\"\
-    1000\",\n  \n  eventMethod:\"post\",\n  postPath:\"/com.snowplowanalytics.snowplow/tp2\"\
-    ,\n  bufferSize:\"1\",\n  encodeBase64:true,\n  maxPostBytes:\"40000\",\n  connectionTimeout:\"\
-    5000\",\n  \n  webPage:true,\n  gaCookies:false,\n  clientHints:false,\n  performanceTiming:false,\n\
-    \  geolocation:false,\n};\n\nconst expected = {\n  type: 'snowplow',\n  appId:\
-    \ mockData.appId,\n  platform: mockData.platform,\n  respectDoNotTrack: mockData.respectDoNotTrack,\n\
-    \  stateStorageStrategy: mockData.stateStorageStrategy,\n  cookieDomain: false,\n\
-    \  discoverRootDomain: true,\n  cookieName: mockData.cookieName,\n  cookieLifetime:\
-    \ mockData.cookieLifetime,\n  cookieSameSite: 'Lax',\n  cookieSecure: mockData.cookieSecure,\n\
-    \  sessionCookieTimeout: mockData.sessionCookieTimeout,\n  maxLocalStorageQueueSize:\
-    \ mockData.maxLocalStorageQueueSize,\n  eventMethod: mockData.eventMethod,\n \
-    \ encodeBase64: mockData.encodeBase64,\n  bufferSize: mockData.bufferSize,\n \
-    \ postPath: mockData.postPath,\n  maxPostBytes: mockData.maxPostBytes,\n  connectionTimeout:\
-    \ mockData.connectionTimeout,\n  anonymousTracking: myConsentVar,\n  contexts:\
-    \ {\n    webPage: mockData.webPage,\n    performanceTiming: mockData.performanceTiming,\n\
-    \    gaCookies: mockData.gaCookies,\n    geolocation: mockData.geolocation,\n\
-    \    clientHints: mockData.clientHints,\n  },\n  trackerOptions: {\n    trackerName:\
-    \ mockData.trackerName,\n    collectorEndpoint: mockData.collectorEndpoint,\n\
-    \    libUrl: 'https://unpkg.com/browse/@snowplow/javascript-tracker@' + mockData.version\
-    \ + '/dist/sp.js'\n  }\n};\n\n// Call runCode to run the template's code.\nlet\
-    \ variableResult = runCode(mockData);\nassertThat(variableResult).isEqualTo(expected);\n"
+  code: |
+    const myConsentVar = {
+      withServerAnonymisation: true,
+      withSessionTracking: true,
+    };
+
+    const mockData = {
+      trackerName: 'spTracker',
+      collectorEndpoint: 'test',
+
+      spLibrary: 'unpkg',
+      version: '3.1.5',
+
+      appId: 'my-site',
+      platform: 'web',
+
+      respectDoNotTrack: true,
+      anonymousTracking: myConsentVar,
+
+      stateStorageStrategy: 'cookieAndLocalStorage',
+      cookieDomain: 'auto',
+      cookieName: '_sp_',
+      cookieLifetime: 63072000,
+      cookieSameSite: 'Lax',
+      sessionCookieTimeout: '1800',
+      cookieSecure: true,
+      maxLocalStorageQueueSize: '1000',
+
+      eventMethod: 'post',
+      postPath: '/com.snowplowanalytics.snowplow/tp2',
+      bufferSize: '1',
+      encodeBase64: true,
+      maxPostBytes: '40000',
+      connectionTimeout: '5000',
+
+      webPage: true,
+      gaCookies: false,
+      clientHints: false,
+      performanceTiming: false,
+      geolocation: false,
+    };
+
+    const expected = {
+      type: 'snowplow',
+      appId: mockData.appId,
+      platform: mockData.platform,
+      respectDoNotTrack: mockData.respectDoNotTrack,
+      stateStorageStrategy: mockData.stateStorageStrategy,
+      cookieDomain: false,
+      discoverRootDomain: true,
+      cookieName: mockData.cookieName,
+      cookieLifetime: mockData.cookieLifetime,
+      cookieSameSite: 'Lax',
+      cookieSecure: mockData.cookieSecure,
+      sessionCookieTimeout: mockData.sessionCookieTimeout,
+      maxLocalStorageQueueSize: mockData.maxLocalStorageQueueSize,
+      eventMethod: mockData.eventMethod,
+      encodeBase64: mockData.encodeBase64,
+      bufferSize: mockData.bufferSize,
+      postPath: mockData.postPath,
+      maxPostBytes: mockData.maxPostBytes,
+      connectionTimeout: mockData.connectionTimeout,
+      anonymousTracking: myConsentVar,
+      contexts: {
+        webPage: mockData.webPage,
+        performanceTiming: mockData.performanceTiming,
+        gaCookies: mockData.gaCookies,
+        geolocation: mockData.geolocation,
+        clientHints: mockData.clientHints,
+      },
+      trackerOptions: {
+        trackerName: mockData.trackerName,
+        collectorEndpoint: mockData.collectorEndpoint,
+        libUrl:
+          'https://unpkg.com/browse/@snowplow/javascript-tracker@' +
+          mockData.version +
+          '/dist/sp.js',
+      },
+    };
+
+    // Call runCode to run the template's code.
+    let variableResult = runCode(mockData);
+    assertThat(variableResult).isEqualTo(expected);
 setup: ''
 
 
