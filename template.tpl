@@ -381,7 +381,7 @@ ___TEMPLATE_PARAMETERS___
           }
         ],
         "displayName": "Cookie Name",
-        "defaultValue": "sp",
+        "defaultValue": "_sp_",
         "simpleValueType": true,
         "name": "cookieName",
         "type": "TEXT"
@@ -800,8 +800,8 @@ scenarios:
     \ 'custom',\n  customPlatform: 'testPlatform',\n  \n  respectDoNotTrack: false,\n\
     \  anonymousTracking: 'anonymousTrackingTrue',\n  withServerAnonymisation: true,\n\
     \  withSessionTracking: false,\n  \n  stateStorageStrategy: 'cookieAndLocalStorage',\n\
-    \  cookieDomain: 'auto',\n  cookieName: 'sp',\n  cookieLifetime: 'custom',\n \
-    \ customCookieLifetime: '123',\n  cookieSameSite: 'Lax',\n  cookieSecure: true,\n\
+    \  cookieDomain: 'auto',\n  cookieName: '_sp_',\n  cookieLifetime: 'custom',\n\
+    \  customCookieLifetime: '123',\n  cookieSameSite: 'Lax',\n  cookieSecure: true,\n\
     \  sessionCookieTimeout: '1800',\n  maxLocalStorageQueueSize: '123',\n  \n  eventMethod:\
     \ 'post',\n  encodeBase64: false,\n  bufferSize: '123',\n  postPath: 'postPath',\n\
     \  maxPostBytes: '123',\n  resetActivityTrackingOnPageView: true,\n  connectionTimeout:\
@@ -830,7 +830,7 @@ scenarios:
     test\",\n  \n  spLibrary: 'unpkg',\n  version: '3.1.5',\n  \n  appId:\"my-site\"\
     ,\n  platform:\"web\",\n  \n  respectDoNotTrack:true,\n  anonymousTracking:\"\
     anonymousTrackingFalse\",\n  \n  stateStorageStrategy:\"cookieAndLocalStorage\"\
-    ,\n  cookieDomain:\"auto\",\n  cookieName:\"sp\",\n  cookieLifetime:63072000,\n\
+    ,\n  cookieDomain:\"auto\",\n  cookieName:\"_sp_\",\n  cookieLifetime:63072000,\n\
     \  cookieSameSite:\"Lax\",\n  sessionCookieTimeout:\"1800\",\n  cookieSecure:true,\n\
     \  maxLocalStorageQueueSize:\"1000\",\n  \n  eventMethod:\"post\",\n  postPath:\"\
     /com.snowplowanalytics.snowplow/tp2\",\n  bufferSize:\"1\",\n  encodeBase64:true,\n\
@@ -859,7 +859,7 @@ scenarios:
     test\",\n  \n  spLibrary: 'unpkg',\n  version: '3.1.5',\n  \n  appId:\"my-site\"\
     ,\n  platform:\"web\",\n  \n  respectDoNotTrack:true,\n  anonymousTracking:myConsentVar,\n\
     \  \n  stateStorageStrategy:\"cookieAndLocalStorage\",\n  cookieDomain:\"auto\"\
-    ,\n  cookieName:\"sp\",\n  cookieLifetime:63072000,\n  cookieSameSite:\"Lax\"\
+    ,\n  cookieName:\"_sp_\",\n  cookieLifetime:63072000,\n  cookieSameSite:\"Lax\"\
     ,\n  sessionCookieTimeout:\"1800\",\n  cookieSecure:true,\n  maxLocalStorageQueueSize:\"\
     1000\",\n  \n  eventMethod:\"post\",\n  postPath:\"/com.snowplowanalytics.snowplow/tp2\"\
     ,\n  bufferSize:\"1\",\n  encodeBase64:true,\n  maxPostBytes:\"40000\",\n  connectionTimeout:\"\
