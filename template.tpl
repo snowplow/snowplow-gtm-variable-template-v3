@@ -73,15 +73,14 @@ ___TEMPLATE_PARAMETERS___
         "type": "GROUP",
         "subParams": [
           {
-            "type": "RADIO",
+            "type": "SELECT",
             "name": "spLibrary",
-            "displayName": "JavaScript Library Host",
-            "radioItems": [
+            "displayName": "Snowplow JavaScript Tracker Library",
+            "macrosInSelect": false,
+            "selectItems": [
               {
                 "value": "jsDelivr",
-                "displayValue": "jsDelivr",
-                "subParams": [],
-                "help": ""
+                "displayValue": "jsDelivr"
               },
               {
                 "value": "unpkg",
@@ -89,30 +88,42 @@ ___TEMPLATE_PARAMETERS___
               },
               {
                 "value": "selfHosted",
-                "displayValue": "Self-hosted",
-                "subParams": [
-                  {
-                    "help": "Add the URL where your self-hosted Snowplow JavaScript library can be downloaded from. If this location is not in AWS S3 (via Cloudfront) or GCP Storage, remember to update \u003ca href\u003d\"https://www.simoahava.com/analytics/custom-templates-guide-for-google-tag-manager/#injects-scripts\"\u003e\u003cstrong\u003etemplate permissions\u003c/strong\u003e\u003c/a\u003e to allow script injection requests to this URL.",
-                    "valueValidators": [
-                      {
-                        "args": [
-                          "^https://.*"
-                        ],
-                        "type": "REGEX"
-                      }
-                    ],
-                    "displayName": "Self-hosted Library URL",
-                    "simpleValueType": true,
-                    "name": "selfHostedUrl",
-                    "type": "TEXT",
-                    "valueHint": "https://123.cloudfront.net/sp.js"
-                  }
-                ]
+                "displayValue": "Self-hosted"
+              },
+              {
+                "value": "doNotLoad",
+                "displayValue": "Do not load"
               }
             ],
             "simpleValueType": true,
-            "help": "Load the Snowplow JavaScript library from a CDN or choose the location where the self-hosted library can be loaded from.",
-            "defaultValue": "selfHosted"
+            "defaultValue": "selfHosted",
+            "help": "Load the Snowplow JavaScript library from a third-party CDN or choose the location where the self-hosted library can be loaded from. `Do not load` can be used when the Tracker Snippet is loaded with another technique such as directly on the page."
+          },
+          {
+            "type": "TEXT",
+            "name": "selfHostedUrl",
+            "displayName": "Self-hosted Library URL",
+            "simpleValueType": true,
+            "help": "Add the URL where your self-hosted Snowplow JavaScript library can be downloaded from. If this location is not in AWS S3 (via Cloudfront) or GCP Storage, remember to update \u003ca href\u003d\"https://www.simoahava.com/analytics/custom-templates-guide-for-google-tag-manager/#injects-scripts\"\u003e\u003cstrong\u003etemplate permissions\u003c/strong\u003e\u003c/a\u003e to allow script injection requests to this URL.",
+            "valueValidators": [
+              {
+                "type": "NON_EMPTY"
+              },
+              {
+                "type": "REGEX",
+                "args": [
+                  "^https://.*"
+                ]
+              }
+            ],
+            "enablingConditions": [
+              {
+                "paramName": "spLibrary",
+                "paramValue": "selfHosted",
+                "type": "EQUALS"
+              }
+            ],
+            "valueHint": "https://123.cloudfront.net/sp.js"
           },
           {
             "type": "TEXT",
@@ -144,7 +155,7 @@ ___TEMPLATE_PARAMETERS___
                 "errorMessage": "The sp.js library version number must be greater or equal to 3 (e.g. 3.1.5)."
               }
             ],
-            "valueHint": "3.1.5"
+            "valueHint": "3.5.0"
           }
         ]
       }
@@ -746,9 +757,12 @@ const JSDELIVR =
   data.version +
   '/dist/sp.min.js';
 
-const libUrl = data.spLibrary === 'unpkg' ? UNPKG
-             : (data.spLibrary === 'jsDelivr' ? JSDELIVR
-             : data.selfHostedUrl);
+const libOptionsMap = {
+  jsDelivr: JSDELIVR,
+  unpkg: UNPKG,
+  doNotLoad: 'doNotLoad',
+  selfHosted: data.selfHostedUrl,
+};
 
 const anonymousTracking = (() => {
   if (
@@ -798,7 +812,7 @@ return {
   trackerOptions: {
     trackerName: data.trackerName,
     collectorEndpoint: data.collectorEndpoint,
-    libUrl: libUrl,
+    libUrl: libOptionsMap[data.spLibrary],
   },
 };
 
@@ -813,7 +827,7 @@ scenarios:
       collectorEndpoint: 'https://www.test.com',
 
       spLibrary: 'unpkg',
-      version: '3.1.5',
+      version: '3.5.0',
 
       appId: 'app-id',
       platform: 'custom',
@@ -901,8 +915,8 @@ scenarios:
       trackerName: 'spTracker',
       collectorEndpoint: 'test',
 
-      spLibrary: 'unpkg',
-      version: '3.1.5',
+      spLibrary: 'jsDelivr',
+      version: '3.5.0',
 
       appId: 'my-site',
       platform: 'web',
@@ -965,9 +979,9 @@ scenarios:
         trackerName: mockData.trackerName,
         collectorEndpoint: mockData.collectorEndpoint,
         libUrl:
-          'https://unpkg.com/browse/@snowplow/javascript-tracker@' +
+          'https://cdn.jsdelivr.net/npm/@snowplow/javascript-tracker@' +
           mockData.version +
-          '/dist/sp.js',
+          '/dist/sp.min.js',
       },
     };
 
@@ -987,8 +1001,8 @@ scenarios:
       trackerName: 'spTracker',
       collectorEndpoint: 'test',
 
-      spLibrary: 'unpkg',
-      version: '3.1.5',
+      spLibrary: 'selfHosted',
+      selfHostedUrl: 'https://foo.bar/sp.js',
 
       appId: 'my-site',
       platform: 'web',
@@ -1050,10 +1064,7 @@ scenarios:
       trackerOptions: {
         trackerName: mockData.trackerName,
         collectorEndpoint: mockData.collectorEndpoint,
-        libUrl:
-          'https://unpkg.com/browse/@snowplow/javascript-tracker@' +
-          mockData.version +
-          '/dist/sp.js',
+        libUrl: mockData.selfHostedUrl,
       },
     };
 
