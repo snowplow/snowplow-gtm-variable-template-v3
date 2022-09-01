@@ -2,11 +2,11 @@
 
 ## Overview
 
-This is the Google Tag Manager [custom variable template](https://developers.google.com/tag-manager/templates) for v3 of the [Snowplow Analytics JavaScript tracker](https://github.com/snowplow/snowplow-javascript-tracker).
+This is the Google Tag Manager [custom variable template](https://developers.google.com/tag-manager/templates) for v3 of the [Snowplow JavaScript tracker](https://github.com/snowplow/snowplow-javascript-tracker).
 
-The **Snowplow Analytics** tag template lets you deploy, implement, and configure the Snowplow Analytics JS tracker on the website using Google Tag Manager.
+The **Snowplow v3 Settings** variable template lets you deploy, implement, and configure the Snowplow JS tracker on the website using Google Tag Manager.
 
-It has been designed to be used with the [Snowplow Analytics v3 custom template](https://github.com/snowplow/snowplow-gtm-tag-template-v3).
+It has been designed to be used with the [Snowplow v3 custom template](https://github.com/snowplow/snowplow-gtm-tag-template-v3).
 
 ## Quickstart
 
@@ -60,4 +60,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 [techdocs-image]: https://d3i6fms1cm1j0i.cloudfront.net/github/images/techdocs.png
-[techdocs]: https://docs.snowplowanalytics.com/docs/collecting-data/collecting-from-own-applications/javascript-trackers/javascript-tracker/google-tag-manager-custom-template/template-for-javascript-tracker-v3/settings-variable-guide/
+[techdocs]: https://docs.snowplow.io/docs/collecting-data/collecting-from-own-applications/javascript-trackers/javascript-tracker/google-tag-manager-custom-template/template-for-javascript-tracker-v3/settings-variable-guide
