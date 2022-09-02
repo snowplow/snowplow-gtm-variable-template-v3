@@ -1,10 +1,17 @@
-homepage: "https://snowplowanalytics.com/"
-documentation: "https://docs.snowplowanalytics.com/docs/collecting-data/collecting-from-own-applications/javascript-trackers/javascript-tracker/google-tag-manager-custom-template/template-for-javascript-tracker-v3/settings-variable-guide/"
+homepage: "https://snowplow.io"
+documentation: "https://docs.snowplow.io/docs/collecting-data/collecting-from-own-applications/javascript-trackers/javascript-tracker/google-tag-manager-custom-template/template-for-javascript-tracker-v3/settings-variable-guide"
 versions:
   # Latest version
-  - sha: 7ecf32d171cf66fce956d1eff8fb0fded38d340d
-    changeNotes: Fix metadata.yaml syntax (#7) 
+  - sha: cd1d1a85ca0bd51bcf8698c10dd59cefc3f342b1
+    changeNotes: |2
+      Switch to snowplow.io domain (#15)
+      Fix help text links (#14)
+      Add option to not inject JavaScript library (#13)
+      Format template with prettier (#10)
+      Update cookieName help text to highlight the default value difference from the JavaScript tracker (#9)
   # Older versions
+  - sha: 7ecf32d171cf66fce956d1eff8fb0fded38d340d
+    changeNotes: Fix metadata.yaml syntax (#7)
   - sha: 72fc820682a4f413e34a13650c8d7b89c7ee7383
     changeNotes: |2
       Update documentation links (#6)
