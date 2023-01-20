@@ -158,7 +158,7 @@ ___TEMPLATE_PARAMETERS___
                 "errorMessage": "The sp.js library version number must be greater or equal to 3 (e.g. 3.1.5)."
               }
             ],
-            "valueHint": "3.5.0"
+            "valueHint": "3.8.0"
           }
         ]
       }
@@ -752,7 +752,7 @@ ___TEMPLATE_PARAMETERS___
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
 const UNPKG =
-  'https://unpkg.com/browse/@snowplow/javascript-tracker@' +
+  'https://unpkg.com/@snowplow/javascript-tracker@' +
   data.version +
   '/dist/sp.js';
 const JSDELIVR =
@@ -901,7 +901,7 @@ scenarios:
         trackerName: mockData.trackerName,
         collectorEndpoint: mockData.collectorEndpoint,
         libUrl:
-          'https://unpkg.com/browse/@snowplow/javascript-tracker@' +
+          'https://unpkg.com/@snowplow/javascript-tracker@' +
           mockData.version +
           '/dist/sp.js',
       },
