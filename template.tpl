@@ -54,10 +54,13 @@ ___TEMPLATE_PARAMETERS___
         "valueValidators": [
           {
             "args": [
-              "^\\S+$"
+              "^\\S+[^/]$"
             ],
-            "errorMessage": "You must provide a valid hostname.",
+            "errorMessage": "You must provide a valid hostname. Please check that no whitespace or trailing slashes are included.",
             "type": "REGEX"
+          },
+          {
+            "type": "NON_EMPTY"
           }
         ],
         "displayName": "Collector Endpoint Hostname",
