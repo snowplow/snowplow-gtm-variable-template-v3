@@ -743,6 +743,14 @@ ___TEMPLATE_PARAMETERS___
         "name": "geolocation",
         "checkboxText": "geolocation",
         "type": "CHECKBOX"
+      },
+      {
+        "type": "CHECKBOX",
+        "name": "session",
+        "checkboxText": "session",
+        "simpleValueType": true,
+        "help": "Adds client session context entity to events, provided that anonymous tracking is disabled. This option is only available since version 3.5 of the Snowplow JavaScript tracker.",
+        "defaultValue": false
       }
     ]
   }
@@ -814,6 +822,7 @@ return {
     gaCookies: data.gaCookies,
     clientHints: data.clientHints,
     geolocation: data.geolocation,
+    session: data.session,
   },
   trackerOptions: {
     trackerName: data.trackerName,
@@ -867,6 +876,7 @@ scenarios:
       gaCookies: false,
       clientHints: false,
       geolocation: false,
+      session: false,
     };
 
     const expected = {
@@ -899,6 +909,7 @@ scenarios:
         gaCookies: mockData.gaCookies,
         geolocation: mockData.geolocation,
         clientHints: mockData.clientHints,
+        session: mockData.session,
       },
       trackerOptions: {
         trackerName: mockData.trackerName,
@@ -951,6 +962,7 @@ scenarios:
       clientHints: false,
       performanceTiming: false,
       geolocation: false,
+      session: true,
     };
 
     const expected = {
@@ -980,6 +992,7 @@ scenarios:
         gaCookies: mockData.gaCookies,
         geolocation: mockData.geolocation,
         clientHints: mockData.clientHints,
+        session: mockData.session,
       },
       trackerOptions: {
         trackerName: mockData.trackerName,
@@ -1037,6 +1050,7 @@ scenarios:
       clientHints: false,
       performanceTiming: false,
       geolocation: false,
+      session: false,
     };
 
     const expected = {
@@ -1066,6 +1080,7 @@ scenarios:
         gaCookies: mockData.gaCookies,
         geolocation: mockData.geolocation,
         clientHints: mockData.clientHints,
+        session: mockData.session,
       },
       trackerOptions: {
         trackerName: mockData.trackerName,
@@ -1115,6 +1130,7 @@ scenarios:
       clientHints: false,
       performanceTiming: false,
       geolocation: false,
+      session: false,
     };
 
     const expected = {
@@ -1147,6 +1163,7 @@ scenarios:
         gaCookies: mockData.gaCookies,
         geolocation: mockData.geolocation,
         clientHints: mockData.clientHints,
+        session: mockData.session,
       },
       trackerOptions: {
         trackerName: mockData.trackerName,
@@ -1201,6 +1218,7 @@ scenarios:
       clientHints: false,
       performanceTiming: false,
       geolocation: false,
+      session: false,
     };
 
     const expected = {
@@ -1233,6 +1251,7 @@ scenarios:
         gaCookies: mockData.gaCookies,
         geolocation: mockData.geolocation,
         clientHints: mockData.clientHints,
+        session: mockData.session,
       },
       trackerOptions: {
         trackerName: mockData.trackerName,
